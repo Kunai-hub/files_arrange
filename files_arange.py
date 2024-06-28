@@ -11,8 +11,8 @@ class FileSorter:
     """
     def __init__(self, src, dst):
         """
-        :param src: str -> каталог-источник
-        :param dst: str -> каталог-назначения
+        :param src: каталог-источник
+        :param dst: каталог-назначения
         """
         if src:
             self.src = os.path.normpath(src)
@@ -24,20 +24,40 @@ class FileSorter:
             print('Не указан каталог назначения.')
 
     def get_dirs(self, mtime=None):
+        """
+        Получение директории
+        :param mtime: время последней модификации файла
+        :return: название директории
+        """
         file_mdate = time.gmtime(mtime)
         year, mon = str(file_mdate.tm_year), str(file_mdate.tm_mon)
         file_dest = os.path.join(self.dst, *(year, mon if len(mon) != 1 else '0' + mon))
         return file_dest
 
     def make_dirs(self, dir=None):
+        """
+        Проверка директории
+        :param dir: название директории
+        :return: None
+        """
         if not os.path.exists(dir):
             os.makedirs(dir)
 
     def copy_file(self, src=None, dst=None):
+        """
+        Копирование файла
+        :param src: директория исходного файла
+        :param dst: директория конечного файла
+        :return: None
+        """
         if not os.path.exists(dst):
             shutil.copy2(src=src, dst=dst)
 
     def arrange(self):
+        """
+        Сортировка файла
+        :return: None
+        """
         for dir_path, dir_names, file_names in os.walk(self.src):
             for file in file_names:
                 file_mtime = os.path.getmtime(os.path.join(dir_path, file))
