@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import os, time, shutil
 
 
@@ -8,6 +9,7 @@ class FileSorter:
     Сортировка происходит по дате модификации файла в виде "/dst/year/month"
     Сортировка происходит с учетом подкаталогов.
     """
+
     def __init__(self, src, dst):
         """
         :param src: каталог-источник
@@ -22,20 +24,22 @@ class FileSorter:
         else:
             print('Не указан каталог назначения.')
 
-    def get_dirs(self, mtime=None):
+    def get_dirs(self, mod_time=None):
         """
-        Получение директории
-        :param mtime: время последней модификации файла
-        :return: название директории
+        Получение имени директории
+
+        :param mod_time: время последней модификации файла
+        :return: имя директории
         """
-        file_mdate = time.gmtime(mtime)
+        file_mdate = time.gmtime(mod_time)
         year, mon = str(file_mdate.tm_year), str(file_mdate.tm_mon)
         file_dest = os.path.join(self.dst, *(year, mon if len(mon) != 1 else '0' + mon))
         return file_dest
 
     def make_dirs(self, dir=None):
         """
-        Проверка директории
+        Проверка наличия директории
+
         :param dir: название директории
         :return: None
         """
@@ -44,7 +48,8 @@ class FileSorter:
 
     def copy_file(self, src=None, dst=None):
         """
-        Копирование файла
+        Копирование исходного файла
+
         :param src: директория исходного файла
         :param dst: директория конечного файла
         :return: None
@@ -54,13 +59,14 @@ class FileSorter:
 
     def arrange(self):
         """
-        Сортировка файла
+        Запуск сортировки
+
         :return: None
         """
         for dir_path, dir_names, file_names in os.walk(self.src):
             for file in file_names:
-                file_mtime = os.path.getmtime(os.path.join(dir_path, file))
-                file_dst = self.get_dirs(file_mtime)
+                file_mod_time = os.path.getmtime(os.path.join(dir_path, file))
+                file_dst = self.get_dirs(file_mod_time)
                 self.make_dirs(file_dst)
 
                 file_dst = os.path.join(file_dst, file)
