@@ -26,7 +26,7 @@ class FileSorter:
 
     def get_dirs(self, mod_time=None):
         """
-        Получение имени директории
+        Получение имени директории.
 
         :param mod_time: время последней модификации файла
         :return: имя директории
@@ -38,7 +38,7 @@ class FileSorter:
 
     def make_dirs(self, dir=None):
         """
-        Проверка наличия директории
+        Проверка наличия директории.
 
         :param dir: название директории
         :return: None
@@ -48,7 +48,7 @@ class FileSorter:
 
     def copy_file(self, src=None, dst=None):
         """
-        Копирование исходного файла
+        Копирование исходного файла.
 
         :param src: директория исходного файла
         :param dst: директория конечного файла
@@ -59,7 +59,7 @@ class FileSorter:
 
     def arrange(self):
         """
-        Запуск сортировки
+        Запуск сортировки.
 
         :return: None
         """
